@@ -1,0 +1,16 @@
+body {
+    font-size: 14px;
+}
+.container {
+    margin-top: 60px;
+}
+.section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+label {
+    font-weight: normal;
+}
+input.form-control {
+    font-size: 14px;
+}

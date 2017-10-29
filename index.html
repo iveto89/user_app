@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User App</title>
+    <link rel="stylesheet" href="src/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="src/assets/css/style.css">
+</head>
+<body>
+<div class="container">
+    <form>
+        <div class="row">
+            <div class="col-md-4">
+                <input type='text' name="name" class="form-control" placeholder="Name"/>
+            </div>
+            <div class="col-md-4">
+                <input type='text' name="email" class="form-control" placeholder="Email"/>
+            </div>
+        </div>
+        <div class="row section">
+            <div class="col-md-2">
+                <div>Likes beer</div>
+                <label for="likes_beer_true">Yes</label>
+                <input type="radio" name="settings[likes_beer]" id="likes_beer_true" value="true">
+                <label for="likes_beer_false">No</label>
+                <input type="radio" name="settings[likes_beer]" id="likes_beer_false" value="false">
+            </div>
+            <div class="col-md-2">
+                <div>Likes juice</div>
+                <label for="likes_juice_true">Yes</label>
+                <input type="radio" name="settings[likes_juice]" id="likes_juice_true" value="true">
+                <label for="likes_juice_false">No</label>
+                <input type="radio" name="settings[likes_juice]" id="likes_juice_false" value="false">
+            </div>
+            <div class="col-md-2">
+                <div>Likes tea</div>
+                <label for="likes_tea_true">Yes</label>
+                <input type="radio" name="settings[likes_tea]" id="likes_tea_true" value="true">
+                <label for="likes_tea_false">No</label>
+                <input type="radio" name="settings[likes_tea]" id="likes_tea_false" value="false">
+            </div>
+            <div class="col-md-2">
+                <div>Likes coffee</div>
+                <label for="likes_coffee_true">Yes</label>
+                <input type="radio" name="settings[likes_coffee]" id="likes_coffee_true" value="true">
+                <label for="likes_coffee_false">No</label>
+                <input type="radio" name="settings[likes_coffee]" id="likes_coffee_false" value="false">
+            </div>
+            <div class="col-md-2">
+                <div>Likes coke</div>
+                <label for="likes_coke_true">Yes</label>
+                <input type="radio" name="settings[likes_coke]" id="likes_coke_true" value="true">
+                <label for="likes_coke_false">No</label>
+                <input type="radio" name="settings[likes_coke]" id="likes_coke_false" value="false">
+                <input type="hidden" name="isAjax" id="isAjax" value="true"/>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Settings</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+<script src="src/assets/js/jquery-3.2.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let data = $( 'form #isAjax' ).serialize();
+            getData(data);
+
+            $('form :input').on('submit change keyup input', function(e){
+                e.preventDefault();
+
+                let form_data = $( 'form' ).serializeArray();
+                getData(form_data);
+            });
+        });
+
+        function getData(data = {}) {
+            $.ajax({
+                url: "index.php",
+                context: document.body,
+                data: data,
+                dataType: "json",
+            }).done(function(response) {
+                $('table > tbody').html('');
+                if(response) {
+                    response.forEach(function(user) {
+                        $('table > tbody').append(`<tr><td>${user.id}</td><td>${user.name}<td>${user.email}</td><td>${user.settings}</td></tr>`);
+                    });
+                }
+            });
+        }
+
+    </script>
+    </body>
+</html>

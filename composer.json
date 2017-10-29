@@ -1,0 +1,11 @@
+{
+    "require": {
+        "tebazil/db-seeder": "^0.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "vendor\\": "vendor/",
+            "App\\": "src/classes/"
+        }
+    }
+}
